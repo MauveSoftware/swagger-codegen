@@ -28,6 +28,7 @@ namespace IO.Swagger.Model
     /// Invalid use of required on $ref enum, per Swagger 2.0 spec: Any members other than &#39;$ref&#39; in a JSON Reference object SHALL be ignored. See My_Class_With_Required_Inline_Enum for appropriate usage.
     /// </summary>
     [DataContract]
+    [Serializable]
     public partial class MyClassWithInvalidRequiredEnumUsageOnRef :  IEquatable<MyClassWithInvalidRequiredEnumUsageOnRef>, IValidatableObject
     {
         /// <summary>

@@ -6,9 +6,7 @@ namespace {{packageName}}.Client
     /// <summary>
     /// API Exception
     /// </summary>
-    {{#serializable}}
     [Serializable]
-    {{/serializable}}
     {{>visibility}} class ApiException : Exception
     {
         /// <summary>

@@ -28,6 +28,7 @@ namespace IO.Swagger.Model
     /// MyClassWithOptionalInlineEnum
     /// </summary>
     [DataContract]
+    [Serializable]
     public partial class MyClassWithOptionalInlineEnum :  IEquatable<MyClassWithOptionalInlineEnum>, IValidatableObject
     {
         /// <summary>
