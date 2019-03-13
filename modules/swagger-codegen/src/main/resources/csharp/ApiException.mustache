@@ -19,7 +19,7 @@ namespace {{packageName}}.Client
         /// Gets or sets the error content (body json object)
         /// </summary>
         /// <value>The error content (Http response body).</value>
-        public {{#supportsAsync}}dynamic{{/supportsAsync}}{{^supportsAsync}}object{{/supportsAsync}} ErrorContent { get; private set; }
+        public string ErrorContent { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiException"/> class.
@@ -42,11 +42,29 @@ namespace {{packageName}}.Client
         /// <param name="errorCode">HTTP status code.</param>
         /// <param name="message">Error message.</param>
         /// <param name="errorContent">Error content.</param>
-        public ApiException(int errorCode, string message, {{#supportsAsync}}dynamic{{/supportsAsync}}{{^supportsAsync}}object{{/supportsAsync}} errorContent = null) : base(message)
+        public ApiException(int errorCode, string message, string errorContent = null) : base(message)
         {
             this.ErrorCode = errorCode;
             this.ErrorContent = errorContent;
         }
-    }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApiException"/> class.
+        /// </summary>
+        protected ApiException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            this.ErrorCode = info.GetInt32(nameof(this.ErrorCode));
+            this.ErrorContent = info.GetString(nameof(this.ErrorContent));
+        }
+
+        public override void GetObjectData(SerializationInfo info,
+                                           StreamingContext context)
+        {
+            info.AddValue(nameof(this.ErrorCode), this.ErrorCode, typeof(int));
+            info.AddValue(nameof(this.ErrorContent), this.ErrorContent, typeof(string));
+
+            base.GetObjectData(info, context);
+        }
+    }
 }
