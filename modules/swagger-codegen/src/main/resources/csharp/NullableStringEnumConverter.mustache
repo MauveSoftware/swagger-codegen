@@ -1,0 +1,45 @@
+{{>partial_header}}
+using System;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace {{packageName}}.Client
+{
+    {{>visibility}} class NullableStringEnumConverter : JsonConverter
+    {
+        private readonly JsonConverter inner;
+
+        public NullableStringEnumConverter()
+        {
+            this.inner = new StringEnumConverter();
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            this.inner.WriteJson(writer, value, serializer);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            try
+            {
+                return this.inner.ReadJson(reader, objectType, existingValue, serializer);
+            }
+            catch (JsonSerializationException e)
+            {
+                if (Nullable.GetUnderlyingType(objectType) != null)
+                {
+                    return null;
+                }
+
+                throw;
+            }
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return this.inner.CanConvert(objectType);
+        }
+    }
+}

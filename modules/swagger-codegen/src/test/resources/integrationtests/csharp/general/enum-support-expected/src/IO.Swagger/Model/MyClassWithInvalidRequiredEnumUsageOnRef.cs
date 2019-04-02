@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
+using NullableStringEnumConverter = IO.Swagger.Client.NullableStringEnumConverter;
 
 namespace IO.Swagger.Model
 {
