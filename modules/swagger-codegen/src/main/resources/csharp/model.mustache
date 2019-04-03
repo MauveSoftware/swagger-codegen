@@ -9,7 +9,9 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+{{#serializableModel}}
 using System.Runtime.Serialization;
+{{/serializableModel}}
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 {{#models}}
@@ -27,7 +29,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 {{/netStandard}}
 using SwaggerDateConverter = {{packageName}}.Client.SwaggerDateConverter;
+{{#allowUnknownEnumValueIfNullable}}
 using NullableStringEnumConverter = {{packageName}}.Client.NullableStringEnumConverter;
+{{/allowUnknownEnumValueIfNullable}}
 
 {{#models}}
 {{#model}}

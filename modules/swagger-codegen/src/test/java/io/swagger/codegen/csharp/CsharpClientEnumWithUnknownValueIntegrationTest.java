@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CsharpClientGeneralEnumSupportIntegrationTest extends AbstractIntegrationTest {
-    public CsharpClientGeneralEnumSupportIntegrationTest() {
+public class CsharpClientEnumWithUnknownValueIntegrationTest extends AbstractIntegrationTest {
+    public CsharpClientEnumWithUnknownValueIntegrationTest() {
         generateSwaggerMetadata = false;
 
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>();
@@ -30,7 +30,7 @@ public class CsharpClientGeneralEnumSupportIntegrationTest extends AbstractInteg
 
     @Override
     protected IntegrationTestPathsConfig getIntegrationTestPathsConfig() {
-        return new IntegrationTestPathsConfig("csharp/general/enum-support");
+        return new IntegrationTestPathsConfig("csharp/enums/enum-with-unknown-value");
     }
 
     @Override
@@ -42,11 +42,12 @@ public class CsharpClientGeneralEnumSupportIntegrationTest extends AbstractInteg
     protected Map<String, String> configProperties() {
         Map<String, String> properties = new HashMap<>();
         properties.put(CodegenConstants.EXCLUDE_TESTS, Boolean.TRUE.toString());
+        properties.put(CodegenConstants.CSHARP_ALLOW_UNKNOWN_ENUM_VALUE_IF_NULLABLE, Boolean.TRUE.toString());
         return properties;
     }
 
     // TODO: Remove this when super.generatesCorrectDirectoryStructure() is re-enabled.
-    @Test(description = "Verify csharp enum support, generalized across supported C# versions.")
+    @Test(description = "Verify use of NullableStringEnumConverter if specified.")
     public void test() throws IOException {
         this.generatesCorrectDirectoryStructure();
     }

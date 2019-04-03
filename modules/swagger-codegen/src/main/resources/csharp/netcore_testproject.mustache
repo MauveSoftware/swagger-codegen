@@ -22,9 +22,10 @@
     <PackageReference Include="FubarCoder.RestSharp.Portable.Core" Version="4.0.7" />
     {{/netStandard}}
     {{^netStandard}}
-    <PackageReference Include="RestSharp" Version="105.1.0" />
+    <PackageReference Include="RestSharp" Version="{{restSharpVersion}}" />
     {{/netStandard}}
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="{{newtonsoftJsonVersion}}" />
+    <PackageReference Include="JsonSubTypes" Version="{{jsonSubTypesVersion}}" />
   </ItemGroup>
 
   {{^netStandard}}

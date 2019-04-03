@@ -62,6 +62,8 @@ public class CSharpClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setValidatable(true);
             times = 1;
+            clientCodegen.setSerializableModel(true);
+            times = 1;
         }};
     }
 }

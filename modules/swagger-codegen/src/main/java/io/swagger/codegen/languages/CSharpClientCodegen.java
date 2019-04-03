@@ -26,6 +26,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     private static final String NETSTANDARD = "v5.0";
     private static final String UWP = "uwp";
 
+    private static final String NewtonsoftJsonVersion = "12.0.1";
+    private static final String JsonSubTypesVersion = "1.5.2";
+    private static final String RestSharpVersion = "105.1.0";
+
     // Defines the sdk option for targeted frameworks, which differs from targetFramework and targetFrameworkNuget
     private static final String MCS_NET_VERSION_KEY = "x-mcs-sdk";
 
@@ -44,6 +48,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     protected boolean supportsUWP = Boolean.FALSE;
     protected boolean netStandard = Boolean.FALSE;
     protected boolean generatePropertyChanged = Boolean.FALSE;
+    protected boolean serializableModel = Boolean.FALSE;
+    protected boolean allowUnknownEnumValueIfNullable = Boolean.FALSE;
 
     protected boolean validatable = Boolean.TRUE;
     protected Map<Character, String> regexModifiers;
@@ -144,6 +150,14 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         addSwitch(CodegenConstants.GENERATE_PROPERTY_CHANGED,
                 CodegenConstants.PACKAGE_DESCRIPTION_DESC,
                 this.generatePropertyChanged);
+
+        addSwitch(CodegenConstants.SERIALIZABLE_MODEL,
+                CodegenConstants.SERIALIZABLE_MODEL_DESC,
+                this.serializableModel);
+
+        addSwitch(CodegenConstants.CSHARP_ALLOW_UNKNOWN_ENUM_VALUE_IF_NULLABLE,
+                CodegenConstants.CSHARP_ALLOW_UNKNOWN_ENUM_VALUE_IF_NULLABLE_DESC,
+                this.allowUnknownEnumValueIfNullable);
 
         // NOTE: This will reduce visibility of all public members in templates. Users can use InternalsVisibleTo
         // https://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx
@@ -292,6 +306,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         additionalProperties.put("supportsUWP", this.supportsUWP);
         additionalProperties.put("netStandard", this.netStandard);
         additionalProperties.put("targetFrameworkNuget", this.targetFrameworkNuget);
+        additionalProperties.put("newtonsoftJsonVersion", NewtonsoftJsonVersion);
+        additionalProperties.put("jsonSubTypesVersion", JsonSubTypesVersion);
+        additionalProperties.put("restSharpVersion", RestSharpVersion);
 
         // TODO: either remove this and update templates to match the "optionalEmitDefaultValues" property, or rename that property.
         additionalProperties.put("emitDefaultValue", optionalEmitDefaultValue);
@@ -326,6 +343,18 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             additionalProperties.put(CodegenConstants.NON_PUBLIC_API, isNonPublicApi());
         }
 
+        if (additionalProperties.containsKey(CodegenConstants.SERIALIZABLE_MODEL)) {
+            setSerializableModel(convertPropertyToBooleanAndWriteBack(CodegenConstants.SERIALIZABLE_MODEL));
+        } else {
+            additionalProperties.put(CodegenConstants.SERIALIZABLE_MODEL, serializableModel);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.CSHARP_ALLOW_UNKNOWN_ENUM_VALUE_IF_NULLABLE)) {
+            setAllowUnknownEnumValueIfNullable(convertPropertyToBooleanAndWriteBack(CodegenConstants.CSHARP_ALLOW_UNKNOWN_ENUM_VALUE_IF_NULLABLE));
+        } else {
+            additionalProperties.put(CodegenConstants.CSHARP_ALLOW_UNKNOWN_ENUM_VALUE_IF_NULLABLE, allowUnknownEnumValueIfNullable);
+        }
+
         final String testPackageName = testPackageName();
         String packageFolder = sourceFolder + File.separator + packageName;
         String clientPackageDir = packageFolder + File.separator + clientPackage;
@@ -356,8 +385,11 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 clientPackageDir, "ExceptionFactory.cs"));
         supportingFiles.add(new SupportingFile("SwaggerDateConverter.mustache",
                 clientPackageDir, "SwaggerDateConverter.cs"));
-        supportingFiles.add(new SupportingFile("NullableStringEnumConverter.mustache",
-                clientPackageDir, "NullableStringEnumConverter.cs"));
+        
+        if (allowUnknownEnumValueIfNullable) {
+            supportingFiles.add(new SupportingFile("NullableStringEnumConverter.mustache",
+                                clientPackageDir, "NullableStringEnumConverter.cs"));
+        }
 
         if (NET40.equals(this.targetFramework)) {
             // .net 4.0 doesn't include ReadOnlyDictionary…
@@ -437,6 +469,19 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
+        additionalProperties.put("apiExceptionErrorContentType", getApiExceptionErrorContentType());
+    }
+
+    private String getApiExceptionErrorContentType() {
+        if (serializableModel) {
+            return "string";
+        }
+        
+        if (supportsAsync) {
+            return "dynamic";
+        }
+
+        return "object";
     }
 
     public void setModelPropertyNaming(String naming) {
@@ -558,6 +603,14 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     public void setOptionalProjectFileFlag(boolean flag) {
         this.optionalProjectFileFlag = flag;
+    }
+
+    public void setSerializableModel(boolean flag) {
+        this.serializableModel = flag;
+    }
+
+    public void setAllowUnknownEnumValueIfNullable(boolean flag) {
+        this.allowUnknownEnumValueIfNullable = flag;
     }
 
     public void setPackageGuid(String packageGuid) {

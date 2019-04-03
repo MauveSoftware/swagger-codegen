@@ -16,12 +16,10 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
-using NullableStringEnumConverter = IO.Swagger.Client.NullableStringEnumConverter;
 
 namespace IO.Swagger.Model
 {
@@ -29,13 +27,12 @@ namespace IO.Swagger.Model
     /// MyClassWithRequiredInlineEnum
     /// </summary>
     [DataContract]
-    [Serializable]
     public partial class MyClassWithRequiredInlineEnum :  IEquatable<MyClassWithRequiredInlineEnum>, IValidatableObject
     {
         /// <summary>
         /// Defines Days
         /// </summary>
-        [JsonConverter(typeof(NullableStringEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter))]
         public enum DaysEnum
         {
             

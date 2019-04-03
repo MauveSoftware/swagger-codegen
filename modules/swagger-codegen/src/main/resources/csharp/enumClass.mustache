@@ -4,7 +4,12 @@
         {{#description}}
         /// <value>{{description}}</value>
         {{/description}}
+        {{#allowUnknownEnumValueIfNullable}}
         [JsonConverter(typeof(NullableStringEnumConverter))]
+        {{/allowUnknownEnumValueIfNullable}}
+        {{^allowUnknownEnumValueIfNullable}}
+        [JsonConverter(typeof(StringEnumConverter))]
+        {{/allowUnknownEnumValueIfNullable}}
         {{>visibility}} enum {{#datatypeWithEnum}}{{.}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}
         {
             {{#allowableValues}}{{#enumVars}}

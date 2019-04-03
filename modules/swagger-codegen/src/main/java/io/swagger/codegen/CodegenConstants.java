@@ -157,6 +157,9 @@ public class CodegenConstants {
     public static final String DOTNET_FRAMEWORK = "targetFramework";
     public static final String DOTNET_FRAMEWORK_DESC = "The target .NET framework version.";
 
+    public static final String CSHARP_ALLOW_UNKNOWN_ENUM_VALUE_IF_NULLABLE = "allowUnknownEnumValueIfNullable";
+    public static final String CSHARP_ALLOW_UNKNOWN_ENUM_VALUE_IF_NULLABLE_DESC = "If an enum is nullable and the given value is unknown, null is used instead of throwing an exception";
+
     public static enum MODEL_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original}
     public static enum ENUM_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original, UPPERCASE}
 

@@ -16,21 +16,18 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
-using NullableStringEnumConverter = IO.Swagger.Client.NullableStringEnumConverter;
 
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// Invalid use of required on $ref enum, per Swagger 2.0 spec: Any members other than &#39;$ref&#39; in a JSON Reference object SHALL be ignored. See My_Class_With_Required_Inline_Enum for appropriate usage.
+    /// MyClassWithOptionalEnum
     /// </summary>
     [DataContract]
-    [Serializable]
-    public partial class MyClassWithInvalidRequiredEnumUsageOnRef :  IEquatable<MyClassWithInvalidRequiredEnumUsageOnRef>, IValidatableObject
+    public partial class MyClassWithOptionalEnum :  IEquatable<MyClassWithOptionalEnum>, IValidatableObject
     {
         /// <summary>
         /// Gets or Sets Days
@@ -38,21 +35,29 @@ namespace IO.Swagger.Model
         [DataMember(Name="days", EmitDefaultValue=false)]
         public WeekDays? Days { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="MyClassWithInvalidRequiredEnumUsageOnRef" /> class.
+        /// Initializes a new instance of the <see cref="MyClassWithOptionalEnum" /> class.
         /// </summary>
-        /// <param name="first">first.</param>
+        /// <param name="quarantine">quarantine.</param>
+        /// <param name="grayware">grayware.</param>
         /// <param name="days">days.</param>
-        public MyClassWithInvalidRequiredEnumUsageOnRef(bool? first = default(bool?), WeekDays? days = default(WeekDays?))
+        public MyClassWithOptionalEnum(bool? quarantine = default(bool?), bool? grayware = default(bool?), WeekDays? days = default(WeekDays?))
         {
-            this.First = first;
+            this.Quarantine = quarantine;
+            this.Grayware = grayware;
             this.Days = days;
         }
         
         /// <summary>
-        /// Gets or Sets First
+        /// Gets or Sets Quarantine
         /// </summary>
-        [DataMember(Name="first", EmitDefaultValue=false)]
-        public bool? First { get; set; }
+        [DataMember(Name="quarantine", EmitDefaultValue=false)]
+        public bool? Quarantine { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Grayware
+        /// </summary>
+        [DataMember(Name="grayware", EmitDefaultValue=false)]
+        public bool? Grayware { get; set; }
 
 
         /// <summary>
@@ -62,8 +67,9 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class MyClassWithInvalidRequiredEnumUsageOnRef {\n");
-            sb.Append("  First: ").Append(First).Append("\n");
+            sb.Append("class MyClassWithOptionalEnum {\n");
+            sb.Append("  Quarantine: ").Append(Quarantine).Append("\n");
+            sb.Append("  Grayware: ").Append(Grayware).Append("\n");
             sb.Append("  Days: ").Append(Days).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -85,24 +91,29 @@ namespace IO.Swagger.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as MyClassWithInvalidRequiredEnumUsageOnRef);
+            return this.Equals(input as MyClassWithOptionalEnum);
         }
 
         /// <summary>
-        /// Returns true if MyClassWithInvalidRequiredEnumUsageOnRef instances are equal
+        /// Returns true if MyClassWithOptionalEnum instances are equal
         /// </summary>
-        /// <param name="input">Instance of MyClassWithInvalidRequiredEnumUsageOnRef to be compared</param>
+        /// <param name="input">Instance of MyClassWithOptionalEnum to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(MyClassWithInvalidRequiredEnumUsageOnRef input)
+        public bool Equals(MyClassWithOptionalEnum input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.First == input.First ||
-                    (this.First != null &&
-                    this.First.Equals(input.First))
+                    this.Quarantine == input.Quarantine ||
+                    (this.Quarantine != null &&
+                    this.Quarantine.Equals(input.Quarantine))
+                ) && 
+                (
+                    this.Grayware == input.Grayware ||
+                    (this.Grayware != null &&
+                    this.Grayware.Equals(input.Grayware))
                 ) && 
                 (
                     this.Days == input.Days ||
@@ -120,8 +131,10 @@ namespace IO.Swagger.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.First != null)
-                    hashCode = hashCode * 59 + this.First.GetHashCode();
+                if (this.Quarantine != null)
+                    hashCode = hashCode * 59 + this.Quarantine.GetHashCode();
+                if (this.Grayware != null)
+                    hashCode = hashCode * 59 + this.Grayware.GetHashCode();
                 if (this.Days != null)
                     hashCode = hashCode * 59 + this.Days.GetHashCode();
                 return hashCode;

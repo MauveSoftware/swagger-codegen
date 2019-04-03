@@ -2,7 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+{{#serializableModel}}
 using System.Runtime.Serialization;
+{{/serializableModel}}
 
 namespace {{packageName}}.Client
 {
@@ -106,7 +108,9 @@ namespace {{packageName}}.Client
         }
     }
 
+{{#serializableModel}}
     [Serializable]
+{{/serializableModel}}
     public class ReadonlyOperationException : Exception
     {
         //
@@ -128,10 +132,12 @@ namespace {{packageName}}.Client
         {
         }
 
+{{#serializableModel}}
         protected ReadonlyOperationException(
             SerializationInfo info,
             StreamingContext context) : base(info, context)
         {
         }
+{{/serializableModel}}
     }
 }

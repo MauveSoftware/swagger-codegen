@@ -43,6 +43,8 @@ public class CSharpClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.NETCORE_PROJECT_FILE, "false")
                 .put(CodegenConstants.MODEL_PROPERTY_NAMING, MODEL_PROPERTY_NAMING)
                 .put(CodegenConstants.VALIDATABLE, "true")
+                .put(CodegenConstants.SERIALIZABLE_MODEL, "true")
+                .put(CodegenConstants.CSHARP_ALLOW_UNKNOWN_ENUM_VALUE_IF_NULLABLE, "false")
                 .build();
     }
 

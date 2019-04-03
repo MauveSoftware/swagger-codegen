@@ -16,7 +16,6 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
@@ -26,24 +25,73 @@ using NullableStringEnumConverter = IO.Swagger.Client.NullableStringEnumConverte
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// MyClassWithOptionalEnum
+    /// MyClassWithOptionalInlineEnum
     /// </summary>
     [DataContract]
-    [Serializable]
-    public partial class MyClassWithOptionalEnum :  IEquatable<MyClassWithOptionalEnum>, IValidatableObject
+    public partial class MyClassWithOptionalInlineEnum :  IEquatable<MyClassWithOptionalInlineEnum>, IValidatableObject
     {
+        /// <summary>
+        /// Defines Days
+        /// </summary>
+        [JsonConverter(typeof(NullableStringEnumConverter))]
+        public enum DaysEnum
+        {
+            
+            /// <summary>
+            /// Enum Sun for value: sun
+            /// </summary>
+            [EnumMember(Value = "sun")]
+            Sun = 1,
+            
+            /// <summary>
+            /// Enum Mon for value: mon
+            /// </summary>
+            [EnumMember(Value = "mon")]
+            Mon = 2,
+            
+            /// <summary>
+            /// Enum Tue for value: tue
+            /// </summary>
+            [EnumMember(Value = "tue")]
+            Tue = 3,
+            
+            /// <summary>
+            /// Enum Wed for value: wed
+            /// </summary>
+            [EnumMember(Value = "wed")]
+            Wed = 4,
+            
+            /// <summary>
+            /// Enum Thu for value: thu
+            /// </summary>
+            [EnumMember(Value = "thu")]
+            Thu = 5,
+            
+            /// <summary>
+            /// Enum Fri for value: fri
+            /// </summary>
+            [EnumMember(Value = "fri")]
+            Fri = 6,
+            
+            /// <summary>
+            /// Enum Sat for value: sat
+            /// </summary>
+            [EnumMember(Value = "sat")]
+            Sat = 7
+        }
+
         /// <summary>
         /// Gets or Sets Days
         /// </summary>
         [DataMember(Name="days", EmitDefaultValue=false)]
-        public WeekDays? Days { get; set; }
+        public DaysEnum? Days { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="MyClassWithOptionalEnum" /> class.
+        /// Initializes a new instance of the <see cref="MyClassWithOptionalInlineEnum" /> class.
         /// </summary>
         /// <param name="quarantine">quarantine.</param>
         /// <param name="grayware">grayware.</param>
         /// <param name="days">days.</param>
-        public MyClassWithOptionalEnum(bool? quarantine = default(bool?), bool? grayware = default(bool?), WeekDays? days = default(WeekDays?))
+        public MyClassWithOptionalInlineEnum(bool? quarantine = default(bool?), bool? grayware = default(bool?), DaysEnum? days = default(DaysEnum?))
         {
             this.Quarantine = quarantine;
             this.Grayware = grayware;
@@ -70,7 +118,7 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class MyClassWithOptionalEnum {\n");
+            sb.Append("class MyClassWithOptionalInlineEnum {\n");
             sb.Append("  Quarantine: ").Append(Quarantine).Append("\n");
             sb.Append("  Grayware: ").Append(Grayware).Append("\n");
             sb.Append("  Days: ").Append(Days).Append("\n");
@@ -94,15 +142,15 @@ namespace IO.Swagger.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as MyClassWithOptionalEnum);
+            return this.Equals(input as MyClassWithOptionalInlineEnum);
         }
 
         /// <summary>
-        /// Returns true if MyClassWithOptionalEnum instances are equal
+        /// Returns true if MyClassWithOptionalInlineEnum instances are equal
         /// </summary>
-        /// <param name="input">Instance of MyClassWithOptionalEnum to be compared</param>
+        /// <param name="input">Instance of MyClassWithOptionalInlineEnum to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(MyClassWithOptionalEnum input)
+        public bool Equals(MyClassWithOptionalInlineEnum input)
         {
             if (input == null)
                 return false;

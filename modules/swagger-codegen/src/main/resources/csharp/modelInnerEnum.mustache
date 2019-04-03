@@ -6,7 +6,12 @@
         /// <value>{{description}}</value>
         {{/description}}
         {{#isString}}
+        {{#allowUnknownEnumValueIfNullable}}
         [JsonConverter(typeof(NullableStringEnumConverter))]
+        {{/allowUnknownEnumValueIfNullable}}
+        {{^allowUnknownEnumValueIfNullable}}
+        [JsonConverter(typeof(StringEnumConverter))]
+        {{/allowUnknownEnumValueIfNullable}}
         {{/isString}}
         {{>visibility}} enum {{#datatypeWithEnum}}{{.}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}{{#vendorExtensions.x-enum-byte}}: byte{{/vendorExtensions.x-enum-byte}}
         {
